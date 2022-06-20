@@ -4,24 +4,21 @@ import Cell from "./Cell";
 function Board() {
   const [board, setBoard] = useState(Array(9).fill(""));
   const [xCurrent, setXCurrent] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
 
   const selectCell = (index) => {
-    if (board[index]) {
+    if (board[index] || winner) {
       return;
     }
 
     const boardCopy = [...board];
     boardCopy[index] = xCurrent ? "X" : "O";
-
-    xCurrent ? console.log("X") : console.log("O");
-
+    setWinner(findVictor(boardCopy));
     setBoard(boardCopy);
     setXCurrent(!xCurrent);
   };
 
-  const checkVictory = (board) => {
+  const findVictor = (board) => {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -39,13 +36,25 @@ function Board() {
         return board[a];
       }
     }
+
+    // Draw
+    let draw = true;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === "") {
+        draw = false;
+      }
+    }
+    if (draw) {
+      return "No one";
+    }
+
     return null;
   };
 
   return (
     <div>
       <h1>
-        {gameOver
+        {winner
           ? `Game Over: ${winner} wins`
           : xCurrent
           ? "X's turn"
