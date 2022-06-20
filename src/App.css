@@ -40,6 +40,7 @@
 html, body, #root {
   height: 100%;
   width: 100%;
+  text-align: center;
 }
 
 #root {
@@ -67,4 +68,9 @@ html, body, #root {
   flex: 1;
   border: 2px solid white;
   border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 60px;
 }
